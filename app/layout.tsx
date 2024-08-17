@@ -8,9 +8,18 @@ const inter = Inter({ subsets: ["latin"] });
 
 const customTheme: CustomFlowbiteTheme = {
   dropdown: {
-    "floating": {
-      "target": "w-fit bg-blue-500 hover:bg-blue-600 hover:enabled:bg-blue-600"
+    floating: {
+      target: "w-fit bg-blue-500 hover:bg-blue-600 hover:enabled:bg-blue-600",
     },
+  },
+  tabs: {
+    tablist: {
+      tabitem: {
+        base: "flex items-center justify-center rounded-t-lg p-4 text-sm font-medium first:ml-0 focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500",
+        icon: "mr-2 h-5 w-5",
+      },
+    },
+    tabpanel: "hidden",
   },
   button: {
     color: {

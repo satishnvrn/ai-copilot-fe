@@ -13,6 +13,7 @@ export default function Home() {
       <div className="w-full mt-20 px-5">
         <h1 className="font-semibold">Jet Engine</h1>
         <ModelViewer model={PART_MODELS[0]} />
+        <Filters />
       </div>
     </main>
   );
