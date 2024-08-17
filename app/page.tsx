@@ -1,6 +1,7 @@
 import Filters from "@/components/Filters";
+import ModelViewer from "@/components/ModelViewer";
 import ProductSelector from "@/components/ProductSelector";
-import Image from "next/image";
+import { PART_MODELS } from "@/constants";
 
 export default function Home() {
   return (
@@ -9,8 +10,10 @@ export default function Home() {
         <h1 className="font-bold self-center">Applix AI Copilot</h1>
         <ProductSelector />
       </header>
-      <div className="w-full mt-20">Content</div>
-      {/* <Filters /> */}
+      <div className="w-full mt-20 px-5">
+        <h1 className="font-semibold">Jet Engine</h1>
+        <ModelViewer model={PART_MODELS[0]} />
+      </div>
     </main>
   );
 }

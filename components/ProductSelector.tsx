@@ -2,15 +2,16 @@
 
 import React from "react";
 import { Dropdown } from "flowbite-react";
+import { PART_MODELS } from "@/constants";
 
 const ProductSelector: React.FC = () => {
   return (
     <div>
-      <Dropdown label="Select a product" dismissOnClick={false}>
+      <Dropdown label={PART_MODELS[0].name} dismissOnClick={false}>
         <Dropdown.Header>
-          <span className="block text-sm">Select a product from the list</span>
+          <span className="block text-sm font-bold">Select a product from the list</span>
         </Dropdown.Header>
-        <Dropdown.Item>First Product</Dropdown.Item>
+        {PART_MODELS.map(model => (<Dropdown.Item key={model.name}>{model.name}</Dropdown.Item>))}
       </Dropdown>
     </div>
   );
