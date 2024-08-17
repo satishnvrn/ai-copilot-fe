@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState, RefObject } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, GroupProps, useLoader } from "@react-three/fiber";
 import { Group, Box3, AnimationMixer, AnimationClip, Vector3 } from "three";
-import TextMesh from "./TextMesh";
 import { GLTFLoader } from "three-stdlib";
 
 interface ModelProps extends GroupProps {
