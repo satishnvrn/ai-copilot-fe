@@ -4,17 +4,17 @@ import React from 'react';
 import { Card } from "flowbite-react";
 
 interface WizardCardProps {
-  children: React.ReactNode
-  [key: string]: any
+  children: React.ReactNode;
+  title: string;
 }
 
-const WizardCard: React.FC<WizardCardProps> = ({ title, children, ...props }) => {
+const WizardCard: React.FC<WizardCardProps> = ({ title, children }) => {
   return (
-    <Card className='max-w-screen-lg'>
+    <Card className="max-w-screen-lg min-w-[40vw] relative min-h-[40vh]">
       <h1 className='text-xl font-bold tracking-tight text-gray-900'>{title}</h1>
-      {React.Children.map(children, child =>
-        React.isValidElement(child) ? React.cloneElement(child, props) : child
-      )}
+      <div className='relative'>
+        {children}
+      </div>
     </Card>
   )
 }

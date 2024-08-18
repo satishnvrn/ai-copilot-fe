@@ -5,7 +5,7 @@ import { Tabs, RangeSlider, Dropdown, Label } from "flowbite-react";
 
 export default function Filters() {
   return (
-    <div className="flex flex-row border-gray-400 border-t pt-5 items-center">
+    <div className="flex flex-row border-gray-400 border-t pt-5 items-center px-5">
       <p className="mr-5 self-center text-sm">Filter By</p>
 
       <Tabs aria-label="Default tabs" variant="default" className="mr-5">
