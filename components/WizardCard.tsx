@@ -10,7 +10,7 @@ interface WizardCardProps {
 
 const WizardCard: React.FC<WizardCardProps> = ({ title, children }) => {
   return (
-    <Card className="max-w-screen-lg min-w-[40vw] relative min-h-[40vh]">
+    <Card className="max-w-screen-lg min-w-[500] relative min-h-[350px]">
       <h1 className='text-xl font-bold tracking-tight text-gray-900'>{title}</h1>
       <div className='relative'>
         {children}
