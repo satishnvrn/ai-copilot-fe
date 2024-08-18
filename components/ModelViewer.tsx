@@ -15,7 +15,7 @@ interface ModelViewerProps {
 
 const ModelViewer: React.FC<ModelViewerProps> = ({ model }) => {
   return (
-    <div className="h-[50vh] w-full">
+    <div className="h-[40vh] w-full">
       <Canvas flat linear shadows>
         <PerspectiveCamera makeDefault fov={50} position={[10, 10, 16]} />
         <ambientLight intensity={1} />

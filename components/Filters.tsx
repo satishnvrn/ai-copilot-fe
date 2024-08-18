@@ -5,8 +5,8 @@ import { Tabs, RangeSlider, Dropdown, Label } from "flowbite-react";
 
 export default function Filters() {
   return (
-    <div className="flex flex-row">
-      <p className="mr-5 self-center">Filter By</p>
+    <div className="flex flex-row border-gray-400 border-t pt-5 items-center">
+      <p className="mr-5 self-center text-sm">Filter By</p>
 
       <Tabs aria-label="Default tabs" variant="default" className="mr-5">
         <Tabs.Item active title="3 Months" />
@@ -31,7 +31,7 @@ export default function Filters() {
         <div className="mb-1 block">
           <Label htmlFor="quality-filter" value="Quality" />
         </div>
-        <RangeSlider id="quality-filter" />
+        <RangeSlider id="quality-filter" sizing="sm" />
       </div>
     </div>
   );
