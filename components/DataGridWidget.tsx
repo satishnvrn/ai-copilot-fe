@@ -11,7 +11,7 @@ interface DataGridWidgetProps {
 const DataGridWidget: React.FC<DataGridWidgetProps> = ({ data, headers }) => {
   return (
     <div className="overflow-x-auto w-full h-full">
-      <Table>
+      <Table className="min-h-[300px]">
         <Table.Head>
           {headers.map((header, index) => (
             <Table.HeadCell key={index}>{header}</Table.HeadCell>

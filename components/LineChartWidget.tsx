@@ -28,7 +28,7 @@ const LineChartWidget: React.FC<LineChartWidgetProps> = ({
   yKeys,
 }) => {
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" minHeight={height}>
       <LineChart
         width={width}
         height={height}

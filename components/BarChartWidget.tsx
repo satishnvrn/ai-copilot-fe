@@ -29,7 +29,7 @@ const BarChartWidget: React.FC<BarChartWidgetProps> = ({
   yKeys,
 }) => {
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" minHeight={height}>
       <BarChart
         width={width}
         height={height}
@@ -49,16 +49,6 @@ const BarChartWidget: React.FC<BarChartWidgetProps> = ({
         {yKeys.map((key) => (
           <Bar key={key.name} dataKey={key.name} fill={key.color || "#8884d8"} />
         ))}
-        {/* <Bar
-          dataKey="pv"
-          fill="#8884d8"
-          activeBar={<Rectangle fill="pink" stroke="blue" />}
-        />
-        <Bar
-          dataKey="uv"
-          fill="#82ca9d"
-          activeBar={<Rectangle fill="gold" stroke="purple" />}
-        /> */}
       </BarChart>
     </ResponsiveContainer>
   );
