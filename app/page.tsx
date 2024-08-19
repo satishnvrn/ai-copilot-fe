@@ -1,5 +1,6 @@
 "use client";
 
+import AnimatingProgressBar from "@/components/AnimatingProgressBar";
 import BarChartWidget from "@/components/BarChartWidget";
 import DataGridWidget from "@/components/DataGridWidget";
 import Filters from "@/components/Filters";
@@ -40,7 +41,10 @@ export default function Home() {
           <h1 className="font-semibold">Jet Engine</h1>
           <ModelViewer model={PART_MODELS[0]} />
         </div>
-        <Filters filtersState={filtersState} />
+        <div className="relative top-2.5 min-h-2.5">
+          {loading && <AnimatingProgressBar />}
+        </div>
+        <Filters filtersState={filtersState} loading={loading} />
         <div className="flex flex-row gap-5 justify-around">
           <Carousel slide={false} indicators={false} className="px-10">
             <WizardCard title="Failure Rates">
@@ -63,7 +67,14 @@ export default function Home() {
             </WizardCard>
             <WizardCard title="Production Metrics">
               <DataGridWidget
-                headers={["metricId", "metricDate", "costSavings", "defect", "efficiency", "quality"]}
+                headers={[
+                  "metricId",
+                  "metricDate",
+                  "costSavings",
+                  "defect",
+                  "efficiency",
+                  "quality",
+                ]}
                 data={data}
               />
             </WizardCard>

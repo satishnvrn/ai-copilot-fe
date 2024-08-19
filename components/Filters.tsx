@@ -1,17 +1,18 @@
 "use client";
 
 import React from "react";
-import { DEFECTS, PART_MODELS } from "@/utils/constants";
+import { DEFECTS } from "@/utils/constants";
 import { FiltersType } from "@/utils/types/filterTypes";
 import { Tabs, RangeSlider, Dropdown, Label } from "flowbite-react";
 
 interface FiltersProps {
   filtersState: FiltersType;
+  loading: boolean;
 }
 
 export default function Filters({ filtersState }: FiltersProps) {
   return (
-    <div className="flex flex-row border-gray-400 border-t pt-5 items-center px-5 mb-5">
+    <div className="flex flex-row border-gray-400 border-t pt-5 items-center px-5 mb-5 relative">
       <p className="mr-5 self-center text-sm">Filter By</p>
 
       <Tabs aria-label="Default tabs" variant="default" className="mr-5">
@@ -55,7 +56,10 @@ export default function Filters({ filtersState }: FiltersProps) {
 
       <div>
         <div className="mb-1 block -mt-1">
-          <Label htmlFor="quality-filter" value={`Quality: ${filtersState.minQualityFilter}`} />
+          <Label
+            htmlFor="quality-filter"
+            value={`Quality: ${filtersState.minQualityFilter}`}
+          />
         </div>
         <RangeSlider
           id="quality-filter"
