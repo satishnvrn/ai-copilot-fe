@@ -1,3 +1,5 @@
+"use client";
+
 import BarChartWidget from "@/components/BarChartWidget";
 import DataGridWidget from "@/components/DataGridWidget";
 import Filters from "@/components/Filters";
@@ -5,10 +7,32 @@ import LineChartWidget from "@/components/LineChartWidget";
 import ModelViewer from "@/components/ModelViewer";
 import ProductSelector from "@/components/ProductSelector";
 import WizardCard from "@/components/WizardCard";
-import { PART_MODELS } from "@/constants";
+import { PART_MODELS } from "@/utils/constants";
+import { useFilters } from "@/utils/hooks/useFilters";
+import useProductMetricsData from "@/utils/hooks/useProductMetricsData";
 import { Carousel } from "flowbite-react";
+import { useEffect } from "react";
 
 export default function Home() {
+  const filtersState = useFilters();
+  const { data, loading, error, fetchProductMetrics } = useProductMetricsData();
+
+  useEffect(() => {
+    fetchProductMetrics({
+      periodFilter: filtersState.periodFilter,
+      defectFilter: filtersState.defectFilter,
+      minQuality: filtersState.minQualityFilter,
+    });
+  }, [
+    filtersState.periodFilter,
+    filtersState.defectFilter,
+    filtersState.minQualityFilter,
+  ]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <main className="min-h-screen">
       <header className="px-5 py-2.5 flex flex-row gap-10 border-b border-gray-500 w-full fixed top-0 z-10 bg-gray-200">
@@ -20,56 +44,31 @@ export default function Home() {
           <h1 className="font-semibold">Jet Engine</h1>
           <ModelViewer model={PART_MODELS[0]} />
         </div>
-        <Filters />
+        <Filters filtersState={filtersState} />
         <div className="flex flex-row gap-5 justify-around">
           <Carousel slide={false} indicators={false} className="px-10">
             <WizardCard title="Failure Rates">
               <LineChartWidget
                 width={500}
                 height={300}
-                xKey="date"
-                yKeys={[{ name: "failureRate", color: "#8884d8" }]}
-                data={[
-                  { date: "2024-08-8T04:42:25.132Z", failureRate: 20 },
-                  { date: "2024-08-9T04:42:25.132Z", failureRate: 19 },
-                  { date: "2024-08-10T04:42:25.132Z", failureRate: 18 },
-                  { date: "2024-08-11T04:42:25.132Z", failureRate: 17 },
-                  { date: "2024-08-12T04:42:25.132Z", failureRate: 16 },
-                  { date: "2024-08-13T04:42:25.132Z", failureRate: 15 },
-                  { date: "2024-08-14T04:42:25.132Z", failureRate: 14 },
-                  { date: "2024-08-15T04:42:25.132Z", failureRate: 13 },
-                  { date: "2024-08-16T04:42:25.132Z", failureRate: 12 },
-                  { date: "2024-08-17T04:42:25.132Z", failureRate: 11 },
-                  { date: "2024-08-18T04:42:25.132Z", failureRate: 10 },
-                ]}
+                xKey="metricDate"
+                yKeys={[{ name: "failuteRate", color: "#8884d8" }]}
+                data={data}
               />
             </WizardCard>
             <WizardCard title="Quality Scores">
               <BarChartWidget
                 width={500}
                 height={300}
-                xKey="date"
-                yKeys={[{ name: "qualityScore", color: "#8884d8" }]}
-                data={[
-                  { date: "2024-08-8T04:42:25.132Z", qualityScore: 70 },
-                  { date: "2024-08-9T04:42:25.132Z", qualityScore: 75 },
-                  { date: "2024-08-10T04:42:25.132Z", qualityScore: 78 },
-                  { date: "2024-08-14T04:42:25.132Z", qualityScore: 80 },
-                  { date: "2024-08-15T04:42:25.132Z", qualityScore: 82 },
-                  { date: "2024-08-16T04:42:25.132Z", qualityScore: 85 },
-                  { date: "2024-08-17T04:42:25.132Z", qualityScore: 88 },
-                  { date: "2024-08-18T04:42:25.132Z", qualityScore: 90 },
-                ]}
+                xKey="metricDate"
+                yKeys={[{ name: "quality", color: "#8884d8" }]}
+                data={data}
               />
             </WizardCard>
             <WizardCard title="Production Metrics">
               <DataGridWidget
-                headers={["item1", "item2", "item3"]}
-                data={[
-                  { item1: 1, item2: 2, item3: 3 },
-                  { item1: 4, item2: 5, item3: 6 },
-                  { item1: 7, item2: 8, item3: 9 },
-                ]}
+                headers={["metricId", "metricDate", "costSavings", "defect", "efficiency", "quality"]}
+                data={data}
               />
             </WizardCard>
           </Carousel>

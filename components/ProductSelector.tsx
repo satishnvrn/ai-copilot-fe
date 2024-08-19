@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Dropdown } from "flowbite-react";
-import { PART_MODELS } from "@/constants";
+import { PART_MODELS } from "@/utils/constants";
 
 const ProductSelector: React.FC = () => {
   return (
