@@ -29,10 +29,6 @@ export default function Home() {
     filtersState.minQualityFilter,
   ]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <main className="min-h-screen">
       <header className="px-5 py-2.5 flex flex-row gap-10 border-b border-gray-500 w-full fixed top-0 z-10 bg-gray-200">
