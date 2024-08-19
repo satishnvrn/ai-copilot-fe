@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a simple project for [Applix AI Copilot](https://manufacturing-ai-copilot.vercel.app/). This project contains several parts parts:
+
+- Product Selector: This selector allows users to select a product from a list of options.
+- 3D Model Viewer: This viewer allows users to view a 3D model of a product. It will render the respective gltf file for the selected product.
+- Filters: This allows users to filter the data based on Period(1 Day, 1 Week, 1 Month), type of Defect and minimum quality score.
+- Data Widgets: This section consists of widgets that display data related to the selected product in the form of charts and Data Grid.
 
 ## Getting Started
 
@@ -15,22 +20,3 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
