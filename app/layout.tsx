@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import type { CustomFlowbiteTheme } from "flowbite-react";
 import { Flowbite } from "flowbite-react";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,6 +45,11 @@ const customTheme: CustomFlowbiteTheme = {
 export const metadata: Metadata = {
   title: "Applix AI Copilot",
   description: "Spellchecker for manufacturing",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
 
 export default function RootLayout({
@@ -54,6 +60,13 @@ export default function RootLayout({
   return (
     <Flowbite theme={{ theme: customTheme }}>
       <html lang="en">
+        <Head>
+          <link
+            rel="stylesheet"
+            href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.99.1/style.min.css"
+            type="text/css"
+          />
+        </Head>
         <body className={inter.className}>{children}</body>
       </html>
     </Flowbite>

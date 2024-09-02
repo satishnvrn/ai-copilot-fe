@@ -1,86 +1,95 @@
 "use client";
 
-import AnimatingProgressBar from "@/components/AnimatingProgressBar";
-import BarChartWidget from "@/components/BarChartWidget";
-import DataGridWidget from "@/components/DataGridWidget";
-import Filters from "@/components/Filters";
-import LineChartWidget from "@/components/LineChartWidget";
-import ModelViewer from "@/components/ModelViewer";
-import ProductSelector from "@/components/ProductSelector";
-import WizardCard from "@/components/WizardCard";
-import { PART_MODELS } from "@/utils/constants";
-import { useFilters } from "@/utils/hooks/useFilters";
-import useProductMetricsData from "@/utils/hooks/useProductMetricsData";
-import { Carousel } from "flowbite-react";
-import { useEffect } from "react";
+import Script from "next/script";
+import { useEffect, useState } from "react";
 
-export default function Home() {
-  const filtersState = useFilters();
-  const { data, loading, error, fetchProductMetrics } = useProductMetricsData();
+let Autodesk: any;
+
+const ThreeDimensionalViewer: React.FC = () => {
+  let viewer: {
+    finish: () => void;
+    start: () => any;
+    loadDocumentNode: (doc: any, model: any) => void;
+  } | null;
+
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
   useEffect(() => {
-    fetchProductMetrics({
-      periodFilter: filtersState.periodFilter,
-      defectFilter: filtersState.defectFilter,
-      minQuality: filtersState.minQualityFilter,
-    });
-  }, [
-    filtersState.periodFilter,
-    filtersState.defectFilter,
-    filtersState.minQualityFilter,
-  ]);
+    initializeViewer();
+
+    return () => {
+      if (viewer) {
+        viewer.finish();
+        viewer = null;
+        Autodesk.Viewing.shutdown();
+      }
+    };
+  }, [isScriptLoaded]);
+
+  const initializeViewer = () => {
+    if (isScriptLoaded) {
+      const options = {
+        env: "AutodeskProduction2",
+        api: "streamingV2",
+        getAccessToken: function (
+          onTokenReady: (token: string, expiry: number) => void
+        ) {
+          var token =
+            "<access_token>";
+          var timeInSeconds = 3600;
+          onTokenReady(token, timeInSeconds);
+        },
+      };
+
+      Autodesk.Viewing.Initializer(options, () => {
+        console.log("Initialization started...");
+        const viewerElement = document.getElementById("three-d-viewer");
+        viewer = new Autodesk.Viewing.GuiViewer3D(viewerElement);
+
+        if (viewer) {
+          var startedCode = viewer.start();
+          if (startedCode > 0) {
+            console.error("Failed to create a Viewer: WebGL not supported.");
+            return;
+          }
+
+          console.log("Initialization complete, loading a model next...");
+
+          const documentId =
+            "urn:<urn_of_your_model_in_urn_format>";
+          Autodesk.Viewing.Document.load(documentId, (doc: any) => {
+            const model = doc.getRoot().getDefaultGeometry();
+            viewer?.loadDocumentNode(doc, model);
+          });
+        } else {
+          console.log("Failed to create a Viewer: WebGL not supported.");
+          return;
+        }
+      });
+    }
+  };
 
   return (
     <main className="min-h-screen">
       <header className="px-5 py-2.5 flex flex-row gap-10 border-b border-gray-500 w-full fixed top-0 z-10 bg-gray-200">
-        <h1 className="font-bold self-center">Applix AI Copilot</h1>
-        <ProductSelector />
+        <h1 className="font-bold self-center">Applix AI Copilot 3D Viewer</h1>
       </header>
       <div className="w-full mt-20">
-        <div className="px-5">
-          <h1 className="font-semibold">Jet Engine</h1>
-          <ModelViewer model={PART_MODELS[0]} />
-        </div>
-        <div className="relative top-2.5 min-h-2.5">
-          {loading && <AnimatingProgressBar />}
-        </div>
-        <Filters filtersState={filtersState} loading={loading} />
-        <div className="flex flex-row gap-5 justify-around">
-          <Carousel slide={false} indicators={false} className="px-10">
-            <WizardCard title="Failure Rates">
-              <LineChartWidget
-                width={500}
-                height={300}
-                xKey="metricDate"
-                yKeys={[{ name: "failuteRate", color: "#8884d8" }]}
-                data={data}
-              />
-            </WizardCard>
-            <WizardCard title="Quality Scores">
-              <BarChartWidget
-                width={500}
-                height={300}
-                xKey="metricDate"
-                yKeys={[{ name: "quality", color: "#8884d8" }]}
-                data={data}
-              />
-            </WizardCard>
-            <WizardCard title="Production Metrics">
-              <DataGridWidget
-                headers={[
-                  "metricId",
-                  "metricDate",
-                  "costSavings",
-                  "defect",
-                  "efficiency",
-                  "quality",
-                ]}
-                data={data}
-              />
-            </WizardCard>
-          </Carousel>
-        </div>
+        Upload 3D Viewer
+        <div id="three-d-viewer"></div>
       </div>
+      <Script
+        src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.99.1/viewer3D.min.js"
+        onReady={() => {
+          console.log("autodesk script loaded");
+          Autodesk = (window as any).Autodesk;
+          setIsScriptLoaded(true);
+        }}
+        onError={(e) => {
+          console.log("autodesk script error", e);
+        }}
+      />
     </main>
   );
-}
+};
+export default ThreeDimensionalViewer;
