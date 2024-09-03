@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
       <header className="px-5 py-2.5 flex flex-row gap-10 border-b border-gray-500 w-full fixed top-0 z-10 bg-gray-200">
         <h1 className="font-bold self-center">Applix AI Copilot 3D Viewer</h1>
       </header>
-      <div className="w-full mt-20">
+      <div className="w-full mt-10">
         <ThreeDimensionalViewer
           accessToken="<accessToken>"
           modelUrn="<modelUrn>"

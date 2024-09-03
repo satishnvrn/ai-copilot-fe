@@ -14,11 +14,7 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({
   accessToken,
   modelUrn,
 }) => {
-  let viewer: {
-    finish: () => void;
-    start: () => any;
-    loadDocumentNode: (doc: any, model: any) => void;
-  } | null;
+  let viewer: any | null;
 
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
@@ -42,8 +38,8 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({
         getAccessToken: function (
           onTokenReady: (token: string, expiry: number) => void
         ) {
-          var token = accessToken;
-          var timeInSeconds = 3600;
+          const token = accessToken;
+          const timeInSeconds = 3600;
           onTokenReady(token, timeInSeconds);
         },
       };
@@ -66,6 +62,40 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({
           Autodesk.Viewing.Document.load(documentId, (doc: any) => {
             const model = doc.getRoot().getDefaultGeometry();
             viewer?.loadDocumentNode(doc, model);
+
+            function onToolbarCreated() {
+              var toolbar = viewer?.getToolbar();
+              if (toolbar) {
+                toolbar.setVisible(false);
+              }
+            }
+
+            function onGeometryLoaded() {
+              // Open the Model Browser (Model Tree)
+              var modelTreeExtension = viewer?.getExtension(
+                "Autodesk.ModelStructure"
+              );
+              console.log("modelTreeExtension", modelTreeExtension);
+              if (modelTreeExtension) {
+                modelTreeExtension.activate();
+              } else {
+                viewer
+                  ?.loadExtension("Autodesk.ModelStructure")
+                  .then((extension: any) => {
+                    extension.activate();
+                  });
+              }
+            }
+
+            viewer?.addEventListener(
+              Autodesk.Viewing.TOOLBAR_CREATED_EVENT,
+              onToolbarCreated
+            );
+
+            viewer?.addEventListener(
+              Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+              onGeometryLoaded
+            );
           });
         } else {
           console.log("Failed to create a Viewer: WebGL not supported.");
@@ -77,7 +107,7 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({
 
   return (
     <div>
-      <div id="three-d-viewer"></div>
+      <div id="three-d-viewer" className="relative"></div>
       <Script
         src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.99.1/viewer3D.min.js"
         onReady={() => {
