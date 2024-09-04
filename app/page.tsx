@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import ThreeDimensionalViewer from '@/components/ThreeDModelViewer';
+import React from "react";
+import ThreeDimensionalViewer from "@/components/ThreeDModelViewer";
 
 const LandingPage: React.FC = () => {
   return (
@@ -11,8 +11,7 @@ const LandingPage: React.FC = () => {
       </header>
       <div className="w-full mt-10">
         <ThreeDimensionalViewer
-          accessToken="<accessToken>"
-          modelUrn="<modelUrn>"
+          modelUrn={process.env.NEXT_PUBLIC_AUTODESK_MODEL_URN || ""}
         />
       </div>
     </main>
