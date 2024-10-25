@@ -8,6 +8,8 @@ export async function GET(request: Request) {
       "scope",
       "code:all data:write data:read bucket:create bucket:delete bucket:read"
     );
+    console.log('params', params);
+    console.log('process.env.AUTODESK_CLIENT_AUTH_KEYS', process.env.AUTODESK_CLIENT_AUTH_KEYS);
 
     const accessTokenResponse = await axios.post(
       "https://developer.api.autodesk.com/authentication/v2/token",
